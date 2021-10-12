@@ -1,0 +1,111 @@
+@import 'normalize.css';
+
+:root {
+	--font-sans: -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, helvetica neue,
+		helvetica, Ubuntu, roboto, noto, arial, sans-serif;
+	--font-mono: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace;
+
+	--color-bg-raw: 166, 73%, 88%;
+	--color-text-raw: 204, 35%, 22%;
+	--color-primary-raw: 14, 87%, 49%;
+	--color-secondary-raw: 46, 100%, 54%;
+
+	--color-bg: hsl(var(--color-bg-raw));
+	--color-text: hsl(var(--color-text-raw));
+	--color-primary: hsl(var(--color-primary-raw));
+	--color-secondary: hsl(var(--color-secondary-raw));
+
+	--padding-default: 1rem;
+	--max-width: 840px;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-text-raw: 166, 73%, 88%;
+		--color-bg-raw: 204, 35%, 22%;
+		--color-secondary-raw: 14, 87%, 49%;
+		--color-primary-raw: 46, 100%, 54%;
+	}
+}
+
+html {
+	font-family: var(--font-sans);
+	font-size: 18px;
+	line-height: 1.75;
+}
+
+body {
+	min-height: 100vh;
+	margin: 0;
+	background-color: var(--color-bg);
+	color: var(--color-text);
+}
+
+body * {
+	box-sizing: border-box;
+}
+
+p {
+	margin-bottom: 1rem;
+}
+
+h1 {
+	margin-top: 0;
+	font-size: 2.488rem;
+	text-align: center;
+}
+
+h2 {
+	font-size: 2.074rem;
+}
+
+h3 {
+	font-size: 1.728rem;
+}
+
+h4 {
+	font-size: 1.44rem;
+}
+
+h5 {
+	font-size: 1.2rem;
+}
+
+small,
+.text_small {
+	font-size: 0.833rem;
+}
+
+a,
+a:hover,
+a:visited {
+	color: var(--color-primary);
+}
+
+.full-bleed {
+	width: 100vw;
+	margin-left: calc(50% - 50vw);
+	padding: 2rem var(--padding-default);
+}
+
+.full-bleed > * {
+	max-width: var(--max-width);
+	margin: 0 auto;
+}
+
+.visually-hidden {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+#root {
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}

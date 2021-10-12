@@ -1,0 +1,30 @@
+type ShortMeta @embedded {
+	createdAt: Time
+	visits: [Time]
+	user: ID
+}
+
+type Short {
+	id: ID @unique(index: "short")
+	target: String!
+	proxy: Boolean
+	meta: ShortMeta
+}
+
+input ShortInput {
+	id: ID! @unique(index: "short")
+	target: String!
+	user: ID!
+	proxy: Boolean
+	ttl: Int
+}
+
+type Query {
+	shorts(user: ID!): [Short!] @resolver(name: "all_shorts", paginated: true)
+	short(id: ID!): Short! @resolver(name: "get_short")
+}
+
+type Mutation {
+	createShort(data: ShortInput!): Short! @resolver(name: "create_short")
+	visitShort(id: ID!): Short @resolver(name: "visit_short")
+}
