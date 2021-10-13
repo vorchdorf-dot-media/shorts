@@ -4,11 +4,11 @@
 </script>
 
 <footer>
-	<span
-		>&copy; <a href="https://sascha.work" rel="external">Sascha Zarhuber</a>, {currentYear - YEAR
+	<span>
+		&copy; <a href="https://sascha.work" rel="external">Sascha Zarhuber</a>, {currentYear - YEAR
 			? YEAR + '—' + currentYear
-			: YEAR}.</span
-	>
+			: YEAR}.
+	</span>
 </footer>
 
 <style>

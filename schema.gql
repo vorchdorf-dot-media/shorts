@@ -21,7 +21,7 @@ input ShortInput {
 
 type Query {
 	shorts(user: ID!): [Short!] @resolver(name: "all_shorts", paginated: true)
-	short(id: ID!): Short! @resolver(name: "get_short")
+	short(id: ID!): Short @resolver(name: "get_short")
 }
 
 type Mutation {
