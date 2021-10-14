@@ -1,7 +1,9 @@
 {
 	"name": "shorts",
+	"displayName": "Shorts",
 	"version": "0.0.1",
 	"description": "A service for shortening URLs.",
+	"color": "#CAF7EC",
 	"scripts": {
 		"dev": "svelte-kit dev",
 		"build": "svelte-kit build",
