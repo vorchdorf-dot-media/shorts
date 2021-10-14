@@ -1,11 +1,13 @@
 <script lang="ts">
-	import { getShortLink, handleCopyToClipboard, testURLFormat } from '$utils';
+	import { getContext } from 'svelte';
+	import type { Writable } from 'svelte/store';
 
 	import Button from '$lib/form/button/Button.svelte';
 	import Input from '$lib/form/input/Input.svelte';
 	import Tooltip from '$lib/tooltip/Tooltip.svelte';
 
 	import { enhance } from '$lib/form';
+	import { getShortLink, handleCopyToClipboard, testURLFormat } from '$utils';
 
 	let error: string;
 	let id: string;
@@ -13,6 +15,8 @@
 	let result: string;
 	let showTooltip: boolean = false;
 	let timeout: NodeJS.Timeout;
+
+	const { shorts } = getContext<{ shorts: Writable<Short[]> }>('shorts');
 
 	const deferValidate = (val: string): void => {
 		if (timeout) {
@@ -53,9 +57,11 @@
 		if (data?.createShort) {
 			id = data.createShort.id;
 			const url = getShortLink(id);
-			await navigator.clipboard.writeText(url);
+			await navigator.clipboard.writeText(url).then(handleTooltip);
 			value = url;
 			result = url;
+
+			shorts.set([data.createShort, ...$shorts]);
 		}
 	};
 

@@ -32,6 +32,10 @@ export const CREATE_SHORT = `
       id
       target
       proxy
+      meta {
+        createdAt
+        visits
+      }
     }
   }
 `;

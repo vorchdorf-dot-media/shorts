@@ -17,7 +17,7 @@
 	<input
 		type="text"
 		bind:this={inputRef}
-		on:keyup={() => dispatch('change', inputRef.value)}
+		on:keyup={() => dispatch('change', inputRef?.value)}
 		bind:value
 		{id}
 		{name}

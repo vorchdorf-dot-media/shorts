@@ -31,12 +31,12 @@ export const get = async (
 export const post = async (
 	request: ServerRequest<Locals, FormData>
 ): Promise<{ body: GraphQLResponse; status: number }> => {
-	const parsedTTL = parseInt(request.body.get('ttl'), 10);
+	const parsedTTL = request.body.get('ttl') && parseInt(request.body.get('ttl'), 10);
 	const { id, proxy, target, ttl, user } = {
 		id: request.body.get('id') || generateID(),
 		proxy: !!request.body.get('proxy'),
 		target: request.body.get('url'),
-		ttl: !isNaN(parsedTTL) ? parsedTTL : null,
+		ttl: !isNaN(parsedTTL) ? parsedTTL : undefined,
 		user: request.locals.userid
 	};
 
