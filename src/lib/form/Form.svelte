@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getShortLink, handleCopyToClipboard } from '$utils';
+	import { getShortLink, handleCopyToClipboard, testURLFormat } from '$utils';
 
 	import Button from '$lib/form/button/Button.svelte';
 	import Input from '$lib/form/input/Input.svelte';
@@ -12,12 +12,35 @@
 	let value: string;
 	let result: string;
 	let showTooltip: boolean = false;
+	let timeout: NodeJS.Timeout;
 
-	const handleTooltip = () => {
-		showTooltip = true;
-		setTimeout(() => {
-			showTooltip = false;
-		}, 1000);
+	const deferValidate = (val: string): void => {
+		if (timeout) {
+			clearTimeout(timeout);
+		}
+
+		if (val?.length) {
+			timeout = setTimeout(() => validate(val), 800);
+		}
+	};
+
+	const handleChange = ({ detail }: CustomEvent<string>) => {
+		error = undefined;
+		deferValidate(detail);
+	};
+
+	const handleError = async (res, e, form) => {
+		if (e) {
+			error = e.message;
+			return;
+		}
+		if (res) {
+			const { errors } = await res.json();
+			error = Array.isArray(errors) ? errors[0]?.message : 'Something went wrong. Try again.';
+			return;
+		}
+
+		error = undefined;
 	};
 
 	const handleResult = async (res) => {
@@ -35,18 +58,41 @@
 			result = url;
 		}
 	};
+
+	const handleTooltip = () => {
+		showTooltip = true;
+		setTimeout(() => {
+			showTooltip = false;
+		}, 1000);
+	};
+
+	const validate = (val: string): void => {
+		if (!testURLFormat(val)) {
+			error = 'Invalid URL format.';
+		}
+	};
 </script>
 
 <form
 	action="/shorts.json"
 	method="POST"
 	use:enhance={{
+		error: handleError,
 		result: handleResult
 	}}
 >
-	<Input label="URL to shorten" placeholder="e.g. https://google.com" name="url" bind:value />
+	{#if error}
+		<span class="error">{error}</span>
+	{/if}
+	<Input
+		label="URL to shorten"
+		placeholder="e.g. https://google.com"
+		name="url"
+		on:change={handleChange}
+		bind:value
+	/>
 	{#if !value?.length || value !== result}
-		<Button>Squeeze!</Button>
+		<Button disabled={!!error || !value?.length}>Squeeze!</Button>
 	{:else}
 		<button on:click={(e) => handleCopyToClipboard(e, id, handleTooltip)}>
 			<span>Copy</span>
@@ -59,6 +105,7 @@
 
 <style>
 	form {
+		position: relative;
 		display: flex;
 		flex-direction: column;
 		align-items: stretch;
@@ -68,6 +115,19 @@
 
 	button {
 		position: relative;
+	}
+
+	.error {
+		position: absolute;
+		display: block;
+		width: 100%;
+		top: -1.5rem;
+		left: 0;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		font-family: var(--font-mono);
+		font-size: 0.75rem;
+		overflow: hidden;
 	}
 
 	@media (min-width: 768px) {

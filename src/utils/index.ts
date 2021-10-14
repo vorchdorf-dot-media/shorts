@@ -6,6 +6,10 @@ import { uid } from 'uid/single';
 
 export const ID_DEFAULT_LENGTH = 8;
 
+// https://urlregex.com
+export const URL_REGEXP =
+	/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=+$,\w]+@)?[A-Za-z0-9.-]+|(?:www\.|[-;:&=+$,\w]+@)[A-Za-z0-9.-]+)((?:\/[+~%/.\w\-_]*)?\??(?:[-+=&;%@.\w_]*)#?(?:[.!/\\\w]*))?)/;
+
 export const generateID = (len = ID_DEFAULT_LENGTH): string => uid(len);
 
 export const getRelativeTime = (t: string): [string, string] => {
@@ -50,3 +54,5 @@ export const handleCopyToClipboard = async (
 
 	return typeof cb === 'function' && cb();
 };
+
+export const testURLFormat = (input: string): boolean => URL_REGEXP.test(input);

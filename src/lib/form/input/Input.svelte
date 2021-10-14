@@ -1,14 +1,28 @@
 <script lang="ts">
+	import { createEventDispatcher } from 'svelte';
+
 	export let id: string = 'input';
 	export let label: string;
 	export let name: string;
 	export let placeholder: string;
 	export let value: string = '';
+
+	let inputRef: HTMLInputElement;
+
+	const dispatch = createEventDispatcher();
 </script>
 
 <div>
 	<label class="visually-hidden" for={id}>{label}</label>
-	<input {id} type="text" bind:value {name} {placeholder} />
+	<input
+		type="text"
+		bind:this={inputRef}
+		on:keyup={() => dispatch('change', inputRef.value)}
+		bind:value
+		{id}
+		{name}
+		{placeholder}
+	/>
 </div>
 
 <style>
@@ -48,7 +62,13 @@
 		outline: none;
 	}
 
-	input::placeholder {
+	::placeholder {
 		color: var(--color-placeholder, darkgrey);
+	}
+
+	input[placeholder] {
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
 	}
 </style>

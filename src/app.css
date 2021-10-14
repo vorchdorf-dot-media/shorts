@@ -103,6 +103,12 @@ button:focus {
 	outline: none;
 }
 
+button[disabled] {
+	border-color: transparent;
+	background-color: hsla(var(--color-t-raw, var(--color-text-raw)), 0.15);
+	color: hsla(var(--color-t-raw, var(--color-text-raw)), 0.667);
+}
+
 .full-bleed {
 	width: 100vw;
 	margin-left: calc(50% - 50vw);

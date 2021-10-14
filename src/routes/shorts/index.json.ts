@@ -3,7 +3,7 @@ import type { Locals } from '$lib/types';
 
 import { api } from '$api';
 import { CREATE_SHORT, GET_SHORTS } from '$api/queries';
-import { generateID } from '$utils';
+import { generateID, testURLFormat } from '$utils';
 
 export const get = async (
 	request: ServerRequest<Locals, FormData>
@@ -31,14 +31,38 @@ export const get = async (
 export const post = async (
 	request: ServerRequest<Locals, FormData>
 ): Promise<{ body: GraphQLResponse; status: number }> => {
+	const parsedTTL = parseInt(request.body.get('ttl'), 10);
+	const { id, proxy, target, ttl, user } = {
+		id: request.body.get('id') || generateID(),
+		proxy: !!request.body.get('proxy'),
+		target: request.body.get('url'),
+		ttl: !isNaN(parsedTTL) ? parsedTTL : null,
+		user: request.locals.userid
+	};
+
+	if (!testURLFormat(target)) {
+		return {
+			status: 400,
+			body: {
+				data: null,
+				errors: [
+					{
+						message: 'Invalid URL format.'
+					}
+				]
+			}
+		};
+	}
+
 	const { status, data, errors } = await api(request, {
 		query: CREATE_SHORT,
 		variables: {
 			data: {
-				id: request.body.get('id') || generateID(),
-				proxy: request.body.get('proxy'),
-				target: request.body.get('url'),
-				user: request.locals.userid
+				id,
+				proxy,
+				target,
+				ttl,
+				user
 			}
 		}
 	});
