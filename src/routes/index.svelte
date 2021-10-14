@@ -30,7 +30,7 @@
 </script>
 
 <svelte:head>
-	<title>Home</title>
+	<title>Shorts</title>
 </svelte:head>
 
 <h1>Shorts</h1>

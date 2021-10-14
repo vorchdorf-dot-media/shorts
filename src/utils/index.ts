@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
-import localizedFormat from 'dayjs/plugin/localizedFormat';
-import relativeTime from 'dayjs/plugin/relativeTime';
-import updateLocale from 'dayjs/plugin/updateLocale';
+import localizedFormat from 'dayjs/plugin/localizedFormat.js';
+import relativeTime from 'dayjs/plugin/relativeTime.js';
+import updateLocale from 'dayjs/plugin/updateLocale.js';
 import { uid } from 'uid/single';
 
 export const ID_DEFAULT_LENGTH = 8;
