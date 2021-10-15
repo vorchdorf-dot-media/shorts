@@ -1,10 +1,11 @@
 name = "shorts"
 type = "webpack"
-route = ''
+account_id = ''
 zone_id = ''
 usage_model = ''
 compatibility_flags = []
-workers_dev = true
+workers_dev = false
+route = 'a.sascha.link/*'
 compatibility_date = "2021-10-11"
 
 [site]

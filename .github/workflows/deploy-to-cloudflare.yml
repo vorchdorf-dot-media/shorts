@@ -1,0 +1,61 @@
+name: Deploy to Cloudflare
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+
+    env:
+      PROD: ${{ github.ref == 'refs/heads/main' && github.event_name == 'push' }}
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14.x
+
+      - name: Cache node_modules
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: yarn-deps-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            yarn-deps-${{ hashFiles('package-lock.json') }}
+
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+
+      - name: Patch wrangler.toml
+        env:
+          CF_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CF_ZONE_ID: ${{ secrets.CLOUDFLARE_ZONE_ID }}
+        run: |
+          sed -i -e "s|account_id = ''|account_id = '$CF_ACCOUNT_ID'|g" wrangler.toml
+          sed -i -e "s|zone_id = ''|zone_id = '$CF_ZONE_ID'|g" wrangler.toml
+
+      - name: Build website
+        env:
+          VITE_BASE_URL: ${{ secrets.VITE_BASE_URL }}
+          VITE_DATABASE_TOKEN: ${{ secrets.VITE_DATABASE_TOKEN }}
+          VITE_DATABASE_URL: ${{ secrets.VITE_DATABASE_URL }}
+        run: yarn build
+
+      - name: Deploy to Cloudflare
+        run: wrangler publish
+
+      - name: Release on GitHub
+        if: ${{ env.PROD == 'true' }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx semantic-release
