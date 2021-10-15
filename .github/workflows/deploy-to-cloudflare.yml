@@ -36,13 +36,13 @@ jobs:
       - name: Install dependencies
         run: yarn --frozen-lockfile
 
-      - name: Patch wrangler.toml
-        env:
-          CF_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          CF_ZONE_ID: ${{ secrets.CLOUDFLARE_ZONE_ID }}
-        run: |
-          sed -i -e "s|account_id = ''|account_id = '$CF_ACCOUNT_ID'|g" wrangler.toml
-          sed -i -e "s|zone_id = ''|zone_id = '$CF_ZONE_ID'|g" wrangler.toml
+      # - name: Patch wrangler.toml
+      #   env:
+      #     CF_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      #     CF_ZONE_ID: ${{ secrets.CLOUDFLARE_ZONE_ID }}
+      #   run: |
+      #     sed -i -e "s|account_id = ''|account_id = '$CF_ACCOUNT_ID'|g" wrangler.toml
+      #     sed -i -e "s|zone_id = ''|zone_id = '$CF_ZONE_ID'|g" wrangler.toml
 
       - name: Build website
         env:

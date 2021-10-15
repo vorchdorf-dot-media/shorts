@@ -4,8 +4,7 @@ account_id = ''
 zone_id = ''
 usage_model = ''
 compatibility_flags = []
-workers_dev = false
-route = 'a.sascha.link/*'
+workers_dev = true
 compatibility_date = "2021-10-11"
 
 [site]
