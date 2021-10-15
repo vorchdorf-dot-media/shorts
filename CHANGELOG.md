@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/vorchdorf-dot-media/shorts/compare/v1.0.0...v1.1.0) (2021-10-15)
+
+
+### Features
+
+* added url auto-fill based on GET param, added share target ([7954fba](https://github.com/vorchdorf-dot-media/shorts/commit/7954fba5c88a18232c0eecdc2bc5bef4a9dbded9))
+
 # 1.0.0 (2021-10-15)
 
 
