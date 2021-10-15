@@ -5,7 +5,7 @@
   <strong>🔗✂️ A service for shortening URLs.</strong>
   <br />
   <br />
-  <a href="https://github.com/vorchdorf-dot-media/shorts/actions/workflows/deploy-to-cloudflare.yml"><img alt="GitHub Actions: Deploy to Cloudflare workflow" src="https://github.com/vorchdorf-dot-media/shorts/actions/workflows/deploy-to-cloudflare.yml/badge.svg" /></a> <a href="https://github.com/vorchdorf-dot-media/shorts/actions/workflows/build-and-test.yml"><img alt="GitHub Actions: Test workflow" src="https://github.com/vorchdorf-dot-media/shorts/actions/workflows/build-and-test.yml/badge.svg" /></a> <img alt="License" src="https://img.shields.io/github/license/vorchdorf-dot-media/shorts" /> 
+  <a href="https://github.com/vorchdorf-dot-media/shorts/actions/workflows/deploy-to-cloudflare.yml"><img alt="GitHub Actions: Deploy to Cloudflare workflow" src="https://github.com/vorchdorf-dot-media/shorts/actions/workflows/deploy-to-cloudflare.yml/badge.svg" /></a> <img alt="License" src="https://img.shields.io/github/license/vorchdorf-dot-media/shorts" /> 
   <br />
   <br />
   <img alt="Image showing the user interface in both dark and light mode. The top contains the headline 'Shorts', the center shows the input form, together with a button called 'Squeeze!'. The bottom shows the copyright notice." src="static/card-image.jpg" width="768px" />

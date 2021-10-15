@@ -1,6 +1,6 @@
 name = "shorts"
 type = "webpack"
-route = ''
+account_id = ''
 zone_id = ''
 usage_model = ''
 compatibility_flags = []
