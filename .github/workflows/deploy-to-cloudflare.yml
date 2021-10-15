@@ -52,7 +52,7 @@ jobs:
         run: yarn build
 
       - name: Deploy to Cloudflare
-        run: wrangler publish
+        run: npx wrangler publish
 
       - name: Release on GitHub
         if: ${{ env.PROD == 'true' }}
