@@ -3,6 +3,7 @@ import type { ServerRequest } from '@sveltejs/kit/types/hooks';
 import { api } from '$api';
 import { GET_SHORT, VISIT_SHORT } from '$api/queries';
 import type { Locals } from '$lib/types';
+import { getShortLink } from '$utils';
 
 export const get = async (
 	request: ServerRequest<Locals>
@@ -26,11 +27,11 @@ export const get = async (
 
 	if (!data?.short) {
 		return {
-			status: 404,
+			status: 302,
 			headers: {
-				'content-type': 'text/plain'
-			},
-			body: 'Not Found'
+				'content-length': '0',
+				location: getShortLink('/')
+			}
 		};
 	}
 
@@ -47,9 +48,9 @@ export const get = async (
 		return {
 			status: 301,
 			headers: {
+				'content-length': '0',
 				location: target
-			},
-			body: null
+			}
 		};
 	}
 
@@ -57,11 +58,11 @@ export const get = async (
 
 	if (!res.ok) {
 		return {
-			status: res.status || 404,
+			status: 302,
 			headers: {
-				'content-type': 'text/plain'
-			},
-			body: res.statusText || 'Not Found'
+				'content-length': '0',
+				location: getShortLink('/')
+			}
 		};
 	}
 
