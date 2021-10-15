@@ -1,15 +1,13 @@
 <script context="module" lang="ts">
-	export const prerender = true;
-
 	/**
 	 * @type {import('@sveltejs/kit').Load}
 	 */
-	export async function load({ fetch }) {
+	export async function load({ fetch, page }) {
 		const res = await fetch('/shorts.json');
 		const { data, errors } = await res.json();
 
 		return res.ok && data
-			? { props: { shorts: data.shorts.data, after: data.shorts.after } }
+			? { props: { shorts: data.shorts.data, after: data.shorts.after, query: page.query } }
 			: {
 					status: res.status,
 					error: errors[0]?.message || 'Error while fetching previous short links.'
@@ -19,14 +17,19 @@
 
 <script lang="ts">
 	import { setContext } from 'svelte';
-	import { writable } from 'svelte/store';
+	import { writable, Writable } from 'svelte/store';
 	import Form from '$lib/form/Form.svelte';
 	import Shorts from '$lib/shorts/Shorts.svelte';
 
 	export let after: string;
+	export let query: URLSearchParams;
 	export let shorts: Short[];
 
-	setContext('shorts', { after: writable(after), shorts: writable(shorts) });
+	setContext<{ after: Writable<string>; shorts: Writable<Short[]> }>('shorts', {
+		after: writable(after),
+		shorts: writable(shorts)
+	});
+	query.has('url') && setContext<string>('url', query.get('url').trim());
 </script>
 
 <svelte:head>

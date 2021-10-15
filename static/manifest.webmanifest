@@ -30,6 +30,12 @@
 			"purpose": "any"
 		}
 	],
+	"share_target": {
+		"action": "/",
+		"params": {
+			"url": "url"
+		}
+	},
 	"theme_color": "#caf7ec",
 	"background_color": "#caf7ec",
 	"display": "standalone",

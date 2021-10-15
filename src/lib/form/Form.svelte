@@ -17,6 +17,11 @@
 	let timeout: NodeJS.Timeout;
 
 	const { shorts } = getContext<{ shorts: Writable<Short[]> }>('shorts');
+	const url = getContext<string>('url');
+
+	if (testURLFormat(url)) {
+		value = url;
+	}
 
 	const deferValidate = (val: string): void => {
 		if (timeout) {
@@ -30,7 +35,8 @@
 
 	const handleChange = ({ detail }: CustomEvent<string>) => {
 		error = undefined;
-		deferValidate(detail);
+		value = detail.trim();
+		deferValidate(value);
 	};
 
 	const handleError = async (res, e, form) => {
