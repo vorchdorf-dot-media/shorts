@@ -1,38 +1,39 @@
-# create-svelte
+<div align="center">
+  <img src="static/icons/android-chrome-192x192.png" alt="The icon showing scissors" width="192px" />
+  <br />
+  <h1><a href="https://a.sascha.link/" rel="noopener noreferrer">Shorts</a></h1>
+  <strong>🔗✂️ A service for shortening URLs.</strong>
+  <br />
+  <br />
+  <a href="https://github.com/vorchdorf-dot-media/shorts/actions/workflows/deploy-to-cloudflare.yml"><img alt="GitHub Actions: Deploy to Cloudflare workflow" src="https://github.com/vorchdorf-dot-media/shorts/actions/workflows/deploy-to-cloudflare.yml/badge.svg" /></a> <a href="https://github.com/vorchdorf-dot-media/shorts/actions/workflows/build-and-test.yml"><img alt="GitHub Actions: Test workflow" src="https://github.com/vorchdorf-dot-media/shorts/actions/workflows/build-and-test.yml/badge.svg" /></a> <img alt="License" src="https://img.shields.io/github/license/vorchdorf-dot-media/shorts" /> 
+  <br />
+  <br />
+  <img alt="Image showing the user interface in both dark and light mode. The top contains the headline 'Shorts', the center shows the input form, together with a button called 'Squeeze!'. The bottom shows the copyright notice." src="static/card-image.jpg" width="768px" />
+  <br />
+  <br />
+  <br />
+</div>
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte);
+## About
 
-## Creating a project
+This repository contains the source code for [Shorts](https://a.sascha.link) — a service for squeezing massive hyperlinks into short, memorable ones.
 
-If you're seeing this, you've probably already done this step. Congrats!
-
-```bash
-# create a new project in the current directory
-npm init svelte@next
-
-# create a new project in my-app
-npm init svelte@next my-app
-```
-
-> Note: the `@next` is temporary
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-Before creating a production version of your app, install an [adapter](https://kit.svelte.dev/docs#adapters) for your target environment. Then:
+## Build Setup
 
 ```bash
-npm run build
+# install dependencies
+$ npm install # or: yarn install
+
+# serve with hot reload at localhost:3000
+$ npm run dev # or: yarn dev
+
+# build for production and launch server
+$ npm run build # or: yarn build
+$ npm run preview # or: yarn preview
 ```
 
-> You can preview the built app with `npm run preview`, regardless of whether you installed an adapter. This should _not_ be used to serve your app in production.
+## License
+
+Licensed under the MIT license.
+
+Copyright ©️ 2021 [Sascha Zarhuber](https://sascha.work)

@@ -29,7 +29,7 @@
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-		padding: var(--padding-default);
+		padding: var(--padding-default) var(--padding-default) calc(var(--padding-default) * 2);
 	}
 
 	nav,
