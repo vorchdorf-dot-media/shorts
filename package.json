@@ -44,6 +44,7 @@
 		"cookie": "^0.4.1",
 		"dayjs": "^1.10.7",
 		"normalize.css": "^8.0.1",
+		"svelte-feather-icons": "^3.5.0",
 		"uid": "^2.0.0"
 	}
 }

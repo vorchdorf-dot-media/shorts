@@ -4,6 +4,7 @@
 
 	import Button from '$lib/form/button/Button.svelte';
 	import Input from '$lib/form/input/Input.svelte';
+	import Options from '$lib/form/options/Options.svelte';
 	import Tooltip from '$lib/tooltip/Tooltip.svelte';
 
 	import { enhance } from '$lib/form';
@@ -113,6 +114,7 @@
 			{/if}
 		</button>
 	{/if}
+	<Options />
 </form>
 
 <style>
