@@ -122,6 +122,7 @@
 		position: relative;
 		display: flex;
 		flex-direction: column;
+		flex-wrap: wrap;
 		align-items: stretch;
 		gap: 1em;
 		font-size: 1.25em;
