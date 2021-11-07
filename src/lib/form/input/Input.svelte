@@ -5,6 +5,7 @@
 	export let label: string;
 	export let name: string;
 	export let placeholder: string;
+	export let type = 'text';
 	export let value: string = '';
 
 	let inputRef: HTMLInputElement;
@@ -15,7 +16,7 @@
 <div>
 	<label class="visually-hidden" for={id}>{label}</label>
 	<input
-		type="text"
+		type={type}
 		bind:this={inputRef}
 		on:keyup={() => dispatch('change', inputRef?.value)}
 		bind:value

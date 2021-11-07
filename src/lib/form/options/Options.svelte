@@ -1,19 +1,28 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import Custom from '$lib/form/options/Custom.svelte';
 	import Icon from '$lib/icon/Icon.svelte';
 	import { chevronRight } from '$lib/icon/pack';
 
+	let accordionEl: HTMLDivElement;
+
 	const handleClick = (e: MouseEvent): void => {
 		e.preventDefault();
 	};
+
+	onMount(() => {
+		console.log(accordionEl.getBoundingClientRect());
+	});
 </script>
 
 <div>
-	<button on:click={handleClick}>
+	<button type="button" on:click={handleClick}>
 		<Icon d={chevronRight} />
 		<span>Options</span>
 	</button>
-	<Custom />
+	<div bind:this={accordionEl}>
+		<Custom />
+	</div>
 </div>
 
 <style>
