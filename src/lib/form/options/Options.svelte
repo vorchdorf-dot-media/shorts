@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import Custom from '$lib/form/options/Custom.svelte';
+	import NameInput from '$lib/form/options/NameInput.svelte';
+	import TTLInput from '$lib/form/options/TTLInput.svelte';
 	import Icon from '$lib/icon/Icon.svelte';
 	import { chevronRight } from '$lib/icon/pack';
 
@@ -16,18 +17,24 @@
 </script>
 
 <div>
-	<button type="button" on:click={handleClick}>
+	<button type="button" id="options-toggle" on:click={handleClick}>
 		<Icon d={chevronRight} />
 		<span>Options</span>
 	</button>
-	<div bind:this={accordionEl}>
-		<Custom />
+	<div role="region" aria-labelledby="options-toggle" bind:this={accordionEl}>
+		<NameInput />
+		<TTLInput />
 	</div>
 </div>
 
 <style>
 	div {
 		flex: 1 0 100%;
+	}
+	div[role='region'] {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
 	}
 
 	button {
@@ -42,5 +49,12 @@
 	button:focus {
 		background-color: HSL(var(--color-t-raw, var(--color-text-raw)), 0.125);
 		color: inherit;
+	}
+
+	@media (min-width: 768px) {
+		div[role='region'] {
+			flex-direction: row;
+			gap: 2rem;
+		}
 	}
 </style>

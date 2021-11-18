@@ -1,8 +1,7 @@
 <script context="module" lang="ts">
-	/**
-	 * @type {import('@sveltejs/kit').Load}
-	 */
-	export async function load({ fetch, page }) {
+	import type { Load } from '@sveltejs/kit';
+
+	export const load: Load = async ({ fetch, page }) => {
 		const res = await fetch('/shorts.json');
 		const { data, errors } = await res.json();
 
@@ -12,7 +11,7 @@
 					status: res.status,
 					error: errors[0]?.message || 'Error while fetching previous short links.'
 			  };
-	}
+	};
 </script>
 
 <script lang="ts">

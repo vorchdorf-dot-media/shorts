@@ -10,6 +10,17 @@ export const ID_DEFAULT_LENGTH = 8;
 export const URL_REGEXP =
 	/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=+$,\w]+@)?[A-Za-z0-9.-]+|(?:www\.|[-;:&=+$,\w]+@)[A-Za-z0-9.-]+)((?:\/[+~%/.\w\-_]*)?\??(?:[-+=&;%@.\w_]*)#?(?:[.!/\\\w]*))?)/;
 
+export const defer = (
+	fn: (...params: unknown[]) => void,
+	timeout = 300
+): ((...params: unknown[]) => void) => {
+	let timeoutId = null;
+	return (...params: unknown[]) => {
+		clearTimeout(timeoutId);
+		timeoutId = setTimeout(() => fn(...params), timeout);
+	};
+};
+
 export const generateID = (len = ID_DEFAULT_LENGTH): string => uid(len);
 
 export const getRelativeTime = (t: string): [string, string] => {

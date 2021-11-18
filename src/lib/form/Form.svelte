@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { getContext } from 'svelte';
-	import type { Writable } from 'svelte/store';
+	import { getContext, setContext } from 'svelte';
+	import { Writable, writable } from 'svelte/store';
 
 	import Button from '$lib/form/button/Button.svelte';
 	import Input from '$lib/form/input/Input.svelte';
@@ -9,6 +9,11 @@
 
 	import { enhance } from '$lib/form';
 	import { getShortLink, handleCopyToClipboard, testURLFormat } from '$utils';
+
+	setContext<{ form: Writable<Short>; error: Writable<Map<string, string>> }>('form', {
+		form: writable(null),
+		error: writable(new Map())
+	});
 
 	let error: string;
 	let id: string;
@@ -40,7 +45,7 @@
 		deferValidate(value);
 	};
 
-	const handleError = async (res, e, form) => {
+	const handleError = async (res, e) => {
 		if (e) {
 			error = e.message;
 			return;
