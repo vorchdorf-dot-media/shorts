@@ -3,6 +3,8 @@
 
 	export let id = 'number-input';
 	export let label: string;
+	export let min = 0;
+	export let max = Number.MAX_SAFE_INTEGER;
 	export let name: string;
 	export let placeholder: string;
 	export let step: number = 10;
@@ -33,6 +35,8 @@
 			bind:this={inputRef}
 			on:keyup={() => dispatch('change', inputRef?.value)}
 			{id}
+			{min}
+			{max}
 			{name}
 			{placeholder}
 			{step}

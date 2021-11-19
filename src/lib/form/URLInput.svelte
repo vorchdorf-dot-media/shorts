@@ -1,11 +1,9 @@
 <script lang="ts">
 	import { getFormContext } from '$lib/form/form.context';
 	import Input from '$lib/form/input/Input.svelte';
-	import { defer } from '$utils';
+	import { defer, testURLFormat } from '$utils';
 
-	const ID_REGEX = /^[a-zA-Z0-9\-]+$/;
-
-	const name = 'id';
+	const name = 'target';
 
 	const { form, error } = getFormContext();
 
@@ -17,10 +15,11 @@
 			return;
 		}
 
-		if (!ID_REGEX.test(sanitized)) {
-			return error.update((map) => map.set(name, 'Only characters a-z, A-Z, 0-9, - are allowed.'));
+		if (!testURLFormat(value)) {
+			return error.update((map) => map.set(name, 'Invalid URL format.'));
 		}
-		form.set({ ...$form, id: sanitized });
+
+		form.set({ ...$form, [name]: value });
 	};
 
 	const deferredValidate = defer(validate);
@@ -29,10 +28,9 @@
 </script>
 
 <Input
-	id="custom-id"
-	label="Custom name"
-	placeholder="Enter custom name"
+	label="URL to shorten"
+	placeholder="e.g. https://google.com"
 	{name}
-	on:change={handleChange}
 	value={$form[name]}
+	on:change={handleChange}
 />
