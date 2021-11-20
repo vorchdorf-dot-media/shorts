@@ -4,6 +4,7 @@
 	"version": "0.0.1",
 	"description": "A service for shortening URLs.",
 	"color": "#CAF7EC",
+	"main": "dist/worker.js",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/vorchdorf-dot-media/shorts"
