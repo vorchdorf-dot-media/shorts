@@ -7,7 +7,7 @@
 	export let max = Number.MAX_SAFE_INTEGER;
 	export let name: string;
 	export let placeholder: string;
-	export let step: number = 10;
+	export let step: number = 1;
 	export let value: number = undefined;
 
 	const dispatch = createEventDispatcher();

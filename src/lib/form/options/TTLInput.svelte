@@ -4,7 +4,7 @@
 	import { defer } from '$utils';
 
 	const name = 'ttl';
-	const min = 60;
+	const min = 1;
 
 	const { form, error } = getFormContext();
 
@@ -21,7 +21,9 @@
 		}
 
 		if (parsed < min) {
-			return error.update((map) => map.set(name, 'Lifespan must be greater than 60, if set.'));
+			return error.update((map) =>
+				map.set(name, `Lifespan must be greater than ${min} days, if set.`)
+			);
 		}
 
 		form.set({ ...$form, [name]: parsed });
@@ -34,7 +36,7 @@
 
 <NumberInput
 	id="ttl-id"
-	label="Lifespan"
+	label="Lifespan in days"
 	placeholder="Lifespan"
 	{min}
 	{name}
