@@ -2,72 +2,61 @@
 	import { getContext } from 'svelte';
 	import type { Writable } from 'svelte/store';
 
+	import { getFormContext } from '$lib/form/form.context';
 	import Button from '$lib/form/button/Button.svelte';
-	import Input from '$lib/form/input/Input.svelte';
+	import Options from '$lib/form/options/Options.svelte';
+	import URLInput from '$lib/form/URLInput.svelte';
 	import Tooltip from '$lib/tooltip/Tooltip.svelte';
 
 	import { enhance } from '$lib/form';
 	import { getShortLink, handleCopyToClipboard, testURLFormat } from '$utils';
 
-	let error: string;
 	let id: string;
-	let value: string;
 	let result: string;
 	let showTooltip: boolean = false;
-	let timeout: NodeJS.Timeout;
 
+	const { form, error, options } = getFormContext();
 	const { shorts } = getContext<{ shorts: Writable<Short[]> }>('shorts');
 	const url = getContext<string>('url');
 
 	if (testURLFormat(url)) {
-		value = url;
+		form.set({ ...$form, target: url });
 	}
 
-	const deferValidate = (val: string): void => {
-		if (timeout) {
-			clearTimeout(timeout);
-		}
-
-		if (val?.length) {
-			timeout = setTimeout(() => validate(val), 800);
-		}
-	};
-
-	const handleChange = ({ detail }: CustomEvent<string>) => {
-		error = undefined;
-		value = detail.trim();
-		deferValidate(value);
-	};
-
-	const handleError = async (res, e, form) => {
+	const handleError = async (res, e) => {
 		if (e) {
-			error = e.message;
-			return;
+			return error.update((map) => map.set('api', e.message));
 		}
+
 		if (res) {
 			const { errors } = await res.json();
-			error = Array.isArray(errors) ? errors[0]?.message : 'Something went wrong. Try again.';
-			return;
+			return error.update((map) =>
+				map.set(
+					'api',
+					Array.isArray(errors) ? errors[0]?.message : 'Something went wrong. Try again.'
+				)
+			);
 		}
 
-		error = undefined;
+		error.set(new Map());
 	};
 
 	const handleResult = async (res) => {
 		const { data, errors } = await res.json();
 
 		if (errors) {
-			error = errors[0]?.message;
+			error.update((map) => map.set('api', errors[0]?.message));
 		}
 
 		if (data?.createShort) {
 			id = data.createShort.id;
 			const url = getShortLink(id);
 			await navigator.clipboard.writeText(url).then(handleTooltip);
-			value = url;
 			result = url;
 
+			form.set({ ...$form, id: null, target: url, ttl: null });
 			shorts.set([data.createShort, ...$shorts]);
+			options.set(false);
 		}
 	};
 
@@ -78,11 +67,8 @@
 		}, 1000);
 	};
 
-	const validate = (val: string): void => {
-		if (!testURLFormat(val)) {
-			error = 'Invalid URL format.';
-		}
-	};
+	$: errorMsg = [...$error.values()].filter((val: string) => !!val).shift();
+	$: value = $form.target;
 </script>
 
 <form
@@ -93,18 +79,12 @@
 		result: handleResult
 	}}
 >
-	{#if error}
-		<span class="error">{error}</span>
+	{#if errorMsg}
+		<span class="error">{errorMsg}</span>
 	{/if}
-	<Input
-		label="URL to shorten"
-		placeholder="e.g. https://google.com"
-		name="url"
-		on:change={handleChange}
-		bind:value
-	/>
+	<URLInput />
 	{#if !value?.length || value !== result}
-		<Button disabled={!!error || !value?.length}>Squeeze!</Button>
+		<Button disabled={!!errorMsg || !value?.length}>Squeeze!</Button>
 	{:else}
 		<button on:click={(e) => handleCopyToClipboard(e, id, handleTooltip)}>
 			<span>Copy</span>
@@ -113,6 +93,7 @@
 			{/if}
 		</button>
 	{/if}
+	<Options />
 </form>
 
 <style>
@@ -120,6 +101,7 @@
 		position: relative;
 		display: flex;
 		flex-direction: column;
+		flex-wrap: wrap;
 		align-items: stretch;
 		gap: 1em;
 		font-size: 1.25em;

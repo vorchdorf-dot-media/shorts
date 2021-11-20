@@ -35,8 +35,8 @@ export const post = async (
 	const { id, proxy, target, ttl, user } = {
 		id: request.body.get('id') || generateID(),
 		proxy: !!request.body.get('proxy'),
-		target: request.body.get('url'),
-		ttl: !isNaN(parsedTTL) ? parsedTTL : undefined,
+		target: request.body.get('target'),
+		ttl: !isNaN(parsedTTL) && parsedTTL >= 60 ? parsedTTL : undefined,
 		user: request.locals.userid
 	};
 

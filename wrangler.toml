@@ -1,11 +1,17 @@
 name = "shorts"
-type = "webpack"
+type = "javascript"
 account_id = ''
 zone_id = ''
 usage_model = ''
 compatibility_flags = []
 workers_dev = true
 compatibility_date = "2021-10-11"
+
+[build]
+command = ""
+
+[build.upload]
+format = "service-worker"
 
 [site]
 bucket = "build"

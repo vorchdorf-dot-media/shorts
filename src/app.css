@@ -15,8 +15,10 @@
 	--color-primary: hsl(var(--color-primary-raw));
 	--color-secondary: hsl(var(--color-secondary-raw));
 
+	--border-width: 3px;
 	--padding-default: 0.5rem;
 	--max-width: 840px;
+	--transition-duration: 300ms;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -25,6 +27,12 @@
 		--color-bg-raw: 204, 35%, 22%;
 		--color-secondary-raw: 14, 87%, 49%;
 		--color-primary-raw: 46, 100%, 54%;
+	}
+}
+
+@media (prefers-reduced-motion) {
+	:root {
+		--transition-duration: 0;
 	}
 }
 
@@ -108,6 +116,36 @@ button[disabled] {
 	border-color: transparent;
 	background-color: hsla(var(--color-t-raw, var(--color-text-raw)), 0.15);
 	color: hsla(var(--color-t-raw, var(--color-text-raw)), 0.667);
+}
+
+input {
+	--color-placeholder: hsla(var(--color-t-raw), 0.333);
+
+	display: block;
+	border-radius: 0;
+	border: var(--border-width) solid transparent;
+	padding: 0.75em 1em;
+	width: 100%;
+	font-family: var(--font-mono);
+	font-weight: bold;
+	background-color: transparent;
+	color: inherit;
+}
+
+input:active,
+input:focus {
+	border: var(--border-width) solid var(--color-text);
+	outline: none;
+}
+
+::placeholder {
+	color: var(--color-placeholder, darkgrey);
+}
+
+input[placeholder] {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 .full-bleed {

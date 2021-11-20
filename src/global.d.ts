@@ -24,5 +24,6 @@ declare global {
 			visits?: string[];
 			user?: string;
 		};
+		ttl?: number;
 	};
 }
