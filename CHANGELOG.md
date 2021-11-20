@@ -1,3 +1,20 @@
+# [2.0.0](https://github.com/vorchdorf-dot-media/shorts/compare/v1.1.0...v2.0.0) (2021-11-20)
+
+
+### Features
+
+* added Icon component ([4007a8a](https://github.com/vorchdorf-dot-media/shorts/commit/4007a8a56009cc452410cacb4af87384a440dbe2))
+* added NumberInput ([c3b07fd](https://github.com/vorchdorf-dot-media/shorts/commit/c3b07fdc20dd625d5cdf720eac05902a02fb1173))
+* added options components ([b3b9758](https://github.com/vorchdorf-dot-media/shorts/commit/b3b9758e23e2adfad2b57281d3906b212fa558af))
+* added options container, refactored form handling ([049ec08](https://github.com/vorchdorf-dot-media/shorts/commit/049ec0823166360b3c320eae957c7892748c933c))
+* changed TTL units from min to days ([da4de81](https://github.com/vorchdorf-dot-media/shorts/commit/da4de8166a79fa06e8b411fb96a28c0616d82ab2))
+* fixed NumberInput, cleaned up options structure, added context for Form ([22a2db9](https://github.com/vorchdorf-dot-media/shorts/commit/22a2db90eca6bc169e293a923bfde846c2ffdca5))
+
+
+### BREAKING CHANGES
+
+* 'url' property in POST request was renamed to 'target'.
+
 # [1.1.0](https://github.com/vorchdorf-dot-media/shorts/compare/v1.0.0...v1.1.0) (2021-10-15)
 
 
