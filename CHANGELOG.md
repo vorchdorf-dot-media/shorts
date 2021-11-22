@@ -1,3 +1,10 @@
+## [2.0.1](https://github.com/vorchdorf-dot-media/shorts/compare/v2.0.0...v2.0.1) (2021-11-22)
+
+
+### Bug Fixes
+
+* fixed web share target, updated version in manifest ([d7156f6](https://github.com/vorchdorf-dot-media/shorts/commit/d7156f68e506d1c78bacee43770f7d84440ae435))
+
 # [2.0.0](https://github.com/vorchdorf-dot-media/shorts/compare/v1.1.0...v2.0.0) (2021-11-20)
 
 
