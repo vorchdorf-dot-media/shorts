@@ -1,3 +1,10 @@
+## [2.0.2](https://github.com/vorchdorf-dot-media/shorts/compare/v2.0.1...v2.0.2) (2021-11-22)
+
+
+### Bug Fixes
+
+* added condition to support both text & url fields from share target ([fc98671](https://github.com/vorchdorf-dot-media/shorts/commit/fc98671ce04da5084d36b96637c49aad718be8d4))
+
 ## [2.0.1](https://github.com/vorchdorf-dot-media/shorts/compare/v2.0.0...v2.0.1) (2021-11-22)
 
 
