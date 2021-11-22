@@ -19,16 +19,26 @@
 	import { writable, Writable } from 'svelte/store';
 	import Form from '$lib/form/Form.svelte';
 	import Shorts from '$lib/shorts/Shorts.svelte';
+	import { testURLFormat } from '$utils';
 
 	export let after: string;
 	export let query: URLSearchParams;
 	export let shorts: Short[];
 
+	const text = query.get('text')?.trim();
+	const url = query.get('url')?.trim();
+
+	if (text && testURLFormat(text)) {
+		setContext('url', text);
+	}
+	if (url && testURLFormat(url)) {
+		setContext('url', url);
+	}
+
 	setContext<{ after: Writable<string>; shorts: Writable<Short[]> }>('shorts', {
 		after: writable(after),
 		shorts: writable(shorts)
 	});
-	query.has('url') && setContext<string>('url', query.get('url').trim());
 </script>
 
 <svelte:head>
