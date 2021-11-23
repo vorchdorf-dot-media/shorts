@@ -47,6 +47,11 @@
 
 <h1>Shorts</h1>
 
+<p>
+	<code>{url || text}</code><br />
+	<code>{query.toString()}</code>
+</p>
+
 <p>Squeeze massive hyperlinks into short, recognizeable ones. You know, for sharing.</p>
 
 <div class="full-bleed">
