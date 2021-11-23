@@ -1,3 +1,10 @@
+## [2.0.3](https://github.com/vorchdorf-dot-media/shorts/compare/v2.0.2...v2.0.3) (2021-11-23)
+
+
+### Bug Fixes
+
+* added robots meta tag for non-production builds ([714c08c](https://github.com/vorchdorf-dot-media/shorts/commit/714c08caa538e7cc8c5688003a84eaee3f8ef21b))
+
 ## [2.0.2](https://github.com/vorchdorf-dot-media/shorts/compare/v2.0.1...v2.0.2) (2021-11-22)
 
 
