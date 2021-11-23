@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      PROD: ${{ github.ref == 'refs/heads/main' && github.event_name == 'push' }}
+      VITE_PROD: ${{ github.ref == 'refs/heads/main' && github.event_name == 'push' }}
 
     steps:
       - name: Check out repository
@@ -39,13 +39,19 @@ jobs:
       - name: Install dependencies
         run: yarn --frozen-lockfile
 
-      # - name: Patch wrangler.toml
-      #   env:
-      #     CF_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-      #     CF_ZONE_ID: ${{ secrets.CLOUDFLARE_ZONE_ID }}
-      #   run: |
-      #     sed -i -e "s|account_id = ''|account_id = '$CF_ACCOUNT_ID'|g" wrangler.toml
-      #     sed -i -e "s|zone_id = ''|zone_id = '$CF_ZONE_ID'|g" wrangler.toml
+      - name: Release on GitHub
+        if: ${{ env.VITE_PROD == 'true' }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx semantic-release
+
+      - name: Patch wrangler.toml
+        env:
+          CF_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CF_ZONE_ID: ${{ secrets.CLOUDFLARE_ZONE_ID }}
+        run: |
+          sed -i -e "s|account_id = ''|account_id = '$CF_ACCOUNT_ID'|g" wrangler.toml
+          sed -i -e "s|zone_id = ''|zone_id = '$CF_ZONE_ID'|g" wrangler.toml
 
       - name: Build website
         env:
@@ -54,14 +60,16 @@ jobs:
           VITE_DATABASE_URL: ${{ secrets.VITE_DATABASE_URL }}
         run: yarn build
 
-      - name: Deploy to Cloudflare
+      - name: Deploy to Cloudflare (dev)
+        if: ${{ env.VITE_PROD != 'true' }}
         env:
           CF_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           CF_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         run: wrangler publish
 
-      - name: Release on GitHub
-        if: ${{ env.PROD == 'true' }}
+      - name: Deploy to Cloudflare (production)
+        if: ${{ env.VITE_PROD == 'true' }}
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npx semantic-release
+          CF_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CF_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: wrangler publish --env production
