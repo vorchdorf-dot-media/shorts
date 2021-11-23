@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      PROD: ${{ github.ref == 'refs/heads/main' && github.event_name == 'push' }}
+      VITE_PROD: ${{ github.ref == 'refs/heads/main' && github.event_name == 'push' }}
 
     steps:
       - name: Check out repository
@@ -40,7 +40,7 @@ jobs:
         run: yarn --frozen-lockfile
 
       - name: Release on GitHub
-        if: ${{ env.PROD == 'true' }}
+        if: ${{ env.VITE_PROD == 'true' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npx semantic-release
