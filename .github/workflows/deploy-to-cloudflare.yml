@@ -60,8 +60,16 @@ jobs:
           VITE_DATABASE_URL: ${{ secrets.VITE_DATABASE_URL }}
         run: yarn build
 
-      - name: Deploy to Cloudflare
+      - name: Deploy to Cloudflare (dev)
+        if: ${{ env.VITE_PROD != 'true' }}
         env:
           CF_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           CF_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         run: wrangler publish
+
+      - name: Deploy to Cloudflare (production)
+        if: ${{ env.VITE_PROD == 'true' }}
+        env:
+          CF_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CF_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: wrangler publish --env production
